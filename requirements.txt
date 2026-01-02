@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+
+streamlit
+
+langchain
+langchain-core
+langchain-openai
+langchain-community
+
+httpx
+sqlalchemy
+psycopg[binary]
+python-dotenv
+pydantic
+pypdf
