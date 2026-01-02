@@ -44,9 +44,15 @@ agent = create_agent(
         query_events,
         delete_event,
     ],
-    system_prompt="""You are a helpful assistant with high level of reasoning capabilities. Properly reason the user queries and use the tools provided to you to help the user.
+    system_prompt="""You are a helpful AI assistant with reasoning and tool-use capabilities.
 
-    You can use multiple tools to satisfy the user's query. Always think step-by-step and use tools in the correct sequence.
+    CRITICAL: Always use tools when needed. Don't hallucinate information you don't have.
+    - For weather queries → Use weather tools
+    - For document questions → Check document first, then web search if not found
+    - For meeting queries → Use database tools
+    - For current events/facts → Use google_search
+
+    Now, here are detailed guidelines for each capability:
 
     === WEATHER INTELLIGENCE ===
     
