@@ -16,8 +16,12 @@ def get_current_weather(city: str) -> dict:
 
     params = {"q": city, "units": "metric", "appid": Settings.OPENWEATHERMAP_APIKEY}
 
-    with httpx.Client() as client:
+    with httpx.Client(timeout=10.0) as client:
         response = client.get(url, params=params)
+
+        if response.status_code != 200:
+            return {"error": f"API error: {response.status_code}"}
+
         data = response.json()
 
     return data
@@ -36,8 +40,12 @@ def get_weather_forecast(city: str) -> dict:
 
     params = {"q": city, "units": "metric", "appid": Settings.OPENWEATHERMAP_APIKEY}
 
-    with httpx.Client() as client:
+    with httpx.Client(timeout=10.0) as client:
         response = client.get(url, params=params)
+
+        if response.status_code != 200:
+            return {"error": f"API error: {response.status_code}"}
+
         data = response.json()
 
     return data
