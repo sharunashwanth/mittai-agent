@@ -16,8 +16,22 @@ def google_search(query: str) -> dict:
 
     params = {"q": query, "api_key": Settings.SERPAPI_APIKEY}
 
-    with httpx.Client() as client:
+    with httpx.Client(timeout=10.0) as client:
         response = client.get(url, params=params)
+
+        if response.status_code != 200:
+            return {"error": f"API error: {response.status_code}"}
+
         data = response.json()
 
-    return data
+    organic = data.get("organic_results", [])[:5]
+    return {
+        "results": [
+            {
+                "title": r.get("title"),
+                "snippet": r.get("snippet"),
+                "link": r.get("link"),
+            }
+            for r in organic
+        ]
+    }
